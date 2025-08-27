@@ -127,45 +127,70 @@ body {
 .ie-menubar .menu { margin-right: 12px; }
 .ie-menubar .menu:hover { text-decoration: underline; }
 .ie-toolbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto auto;
   align-items: center;
-  gap: 8px;
+  row-gap: 8px;
+  column-gap: 8px;
   background: var(--win98-3d-face);
   border-bottom: 1px solid #000;
   padding: 4px 6px;
 }
 .ie-toolbar .buttons button {
-  background-color: #c0c0c0; /* usar solo color para no pisar background-image del sprite */
-  border: 2px solid var(--win98-3d-shadow);
-  width: 22px;
-  height: 22px;
-  box-shadow: inset -1px -1px 0 var(--shadow-dark), inset 1px 1px 0 var(--shadow-light);
+  background-color: transparent;
+  border: 0;
+  width: 56px; /* espacio para icono y etiqueta */
+  height: 48px;
+  box-shadow: none;
+  padding: 0;
+  position: relative;
 }
-.ie-toolbar .buttons {
-  gap: 4px;
-}
+.ie-toolbar .buttons { grid-column: 1 / -1; display: flex; gap: 24px; align-items: flex-start; }
+.address { grid-column: 1 / 2; grid-row: 2; }
+.ie-toolbar > .ie-pane-toggle:nth-of-type(1) { grid-row: 2; grid-column: 2; }
+.ie-toolbar > .ie-pane-toggle:nth-of-type(2) { grid-row: 2; grid-column: 3; }
 .ie-toolbar .buttons button:hover { filter: brightness(1.03); }
 .ie-toolbar .buttons button:active { box-shadow: inset 1px 1px 0 var(--shadow-dark), inset -1px -1px 0 var(--shadow-light); }
 .ie-toolbtn {
+  position: relative;
+  width: 56px;
+  height: 48px;
+  overflow: hidden; /* clip para evitar que asomen iconos vecinos */
+}
+.ie-toolbtn::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 8px; /* icono arriba para dejar lugar a la etiqueta */
+  width: 18px;
+  height: 18px;
+  transform: translateX(-50%) scale(1.35);
+  transform-origin: center;
   background-image: url('/icons/browse-ui-icons.png');
   background-repeat: no-repeat;
-  background-size: auto; /* sprite 1:1 */
+  background-position: var(--sprite-x, 0) 0;
   image-rendering: pixelated;
-  width: 22px;
-  height: 22px;
 }
-/* Mapeo inicial (cada icono 16x16; offsets en X de -16px) */
-.ie-toolbtn.back { background-position:    0   0; }
-.ie-toolbtn.forward { background-position: -16px 0; }
-.ie-toolbtn.stop { background-position:    -32px 0; }
-.ie-toolbtn.refresh { background-position: -48px 0; }
-.ie-toolbtn.home { background-position:    -64px 0; }
-/* Extras disponibles si los queremos mostrar más adelante */
-.ie-toolbtn.search { background-position:   -80px 0; }
-.ie-toolbtn.favorites { background-position: -96px 0; }
-.ie-toolbtn.history { background-position:  -112px 0; }
-.ie-toolbtn.mail { background-position:     -128px 0; }
-.ie-toolbtn.print { background-position:    -144px 0; }
+.ie-toolbtn::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  line-height: 1;
+}
+/* Mapeo por variables (pasos de 20 px) */
+.ie-toolbtn.back { --sprite-x: 0px; }
+.ie-toolbtn.forward { --sprite-x: -20px; }
+.ie-toolbtn.stop { --sprite-x: -40px; }
+.ie-toolbtn.refresh { --sprite-x: -60px; }
+.ie-toolbtn.home { --sprite-x: -80px; }
+.ie-toolbtn.search { --sprite-x: -100px; }
+.ie-toolbtn.favorites { --sprite-x: -120px; }
+.ie-toolbtn.history { --sprite-x: -140px; }
+.ie-toolbtn.print { --sprite-x: -240px; }
 .ie-toolbar .address {
   display: flex;
   align-items: center;

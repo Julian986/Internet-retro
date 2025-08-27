@@ -150,9 +150,13 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
         <div className="buttons">
           <button className="ie-toolbtn back" onClick={goBack} title="Back" />
           <button className="ie-toolbtn forward" onClick={goForward} title="Forward" />
-          <button className="ie-toolbtn refresh" onClick={refresh} title="Refresh" />
           <button className="ie-toolbtn stop" onClick={stop} title="Stop" />
+          <button className="ie-toolbtn refresh" onClick={refresh} title="Refresh" />
           <button className="ie-toolbtn home" onClick={home} title="Home" />
+          <button className="ie-toolbtn search" onClick={()=>setShowSearch(true)} title="Search" />
+          <button className="ie-toolbtn favorites" onClick={()=>setShowFav(true)} title="Favorites" />
+          <button className="ie-toolbtn print" title="Print" />
+          <button className="ie-toolbtn history" title="History" />
         </div>
         <form className="address" onSubmit={handleAddressSubmit}>
           <label>Dirección</label>
