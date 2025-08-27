@@ -12,6 +12,8 @@
   --win98-3d-shadow: #808080;
   --win98-3d-darkshadow: #404040;
   --win98-3d-highlight: #ffffff;
+  --ButtonShadow: #808080;
+  --ButtonHilight: #ffffff;
 }
 
 html, body, #root {
@@ -66,7 +68,7 @@ body {
   box-shadow: inset -1px -1px 0 var(--shadow-dark), inset 1px 1px 0 var(--shadow-light);
   margin-left: 2px;
 }
-.ie-appicon { width: 16px; height: 16px; background: linear-gradient(45deg,#2b5fad,#8fb3ff); border: 1px solid #003; display: inline-block; }
+.ie-appicon { width: 16px; height: 16px; background: url('https://98.js.org/images/icons/html-16x16.png') no-repeat center/contain; border: 1px solid #003; display: inline-block; background-color: #fff; }
 
 .retro-titlebar .controls button {
   background: #c0c0c0;
@@ -123,62 +125,74 @@ body {
   border-bottom: 1px solid #000;
   padding: 2px 6px;
   font-size: 12px;
+  /* Estilo Win98 líneas blancas */
+  display: flex;
+  flex-direction: row;
+  padding: 1px 6px;
+  margin-top: 1px;
+  margin-bottom: 5px;
+  border: 1px solid var(--ButtonShadow);
+  box-shadow: 0 1px 0 var(--ButtonHilight), 0 1px 0 var(--ButtonHilight) inset;
 }
 .ie-menubar .menu { margin-right: 12px; }
 .ie-menubar .menu:hover { text-decoration: underline; }
 .ie-toolbar {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr; /* una sola columna, ocupa 100% */
   grid-template-rows: auto auto;
   align-items: center;
   row-gap: 8px;
-  column-gap: 8px;
-  background: var(--win98-3d-face);
-  border-bottom: 1px solid #000;
-  padding: 4px 6px;
+  column-gap: 0;
+  background: #c0c0c0;
+  border: 1px solid var(--ButtonShadow);
+  border-top: none; /* evita doble línea con menubar */
+  padding: 0;
 }
 .ie-toolbar .buttons button {
   background-color: transparent;
   border: 0;
-  width: 56px; /* espacio para icono y etiqueta */
-  height: 48px;
+  width: 52px; /* espacio para icono y etiqueta */
+  height: 44px;
   box-shadow: none;
   padding: 0;
   position: relative;
+  box-sizing: border-box;
 }
-.ie-toolbar .buttons { grid-column: 1 / -1; display: flex; gap: 24px; align-items: flex-start; }
-.address { grid-column: 1 / 2; grid-row: 2; }
+.ie-toolbar .buttons { grid-column: 1; }
+.ie-toolbar .address { grid-column: 1; width: 100%; box-sizing: border-box; }
 .ie-toolbar > .ie-pane-toggle:nth-of-type(1) { grid-row: 2; grid-column: 2; }
 .ie-toolbar > .ie-pane-toggle:nth-of-type(2) { grid-row: 2; grid-column: 3; }
 .ie-toolbar .buttons button:hover { filter: brightness(1.03); }
 .ie-toolbar .buttons button:active { box-shadow: inset 1px 1px 0 var(--shadow-dark), inset -1px -1px 0 var(--shadow-light); }
 .ie-toolbtn {
   position: relative;
-  width: 56px;
-  height: 48px;
+  width: 52px;
+  height: 40px; /* menos alto */
   overflow: hidden; /* clip para evitar que asomen iconos vecinos */
 }
 .ie-toolbtn::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: 8px; /* icono arriba para dejar lugar a la etiqueta */
+  top: 4px; /* icono más cerca del borde superior */
   width: 18px;
   height: 18px;
-  transform: translateX(-50%) scale(1.35);
+  transform: translateX(-50%) scale(1.11); /* 18px * 1.11 ≈ 20px */
   transform-origin: center;
   background-image: url('/icons/browse-ui-icons.png');
   background-repeat: no-repeat;
   background-position: var(--sprite-x, 0) 0;
   image-rendering: pixelated;
+  filter: grayscale(100%);
 }
+.ie-toolbtn:hover::before { filter: none; }
 .ie-toolbtn::after {
   content: attr(title);
   position: absolute;
   bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1;
 }
 /* Mapeo por variables (pasos de 20 px) */
@@ -191,15 +205,36 @@ body {
 .ie-toolbtn.favorites { --sprite-x: -120px; }
 .ie-toolbtn.history { --sprite-x: -140px; }
 .ie-toolbtn.print { --sprite-x: -240px; }
+.ie-toolbtn.back, .ie-toolbtn.forward {
+  padding-right: 12px; /* más espacio a la derecha para la flecha */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='4'><path d='M0,0 L3,4 L6,0Z' fill='%23777'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 18px;
+}
+.ie-toolbtn.back:hover, .ie-toolbtn.forward:hover {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='4'><path d='M0,0 L3,4 L6,0Z' fill='%23000'/></svg>");
+}
 .ie-toolbar .address {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 6px;
   flex: 1;
+  padding: 1px 6px;
+  margin-top: 1px;
+  margin-bottom: 5px;
+  border: 1px solid var(--ButtonShadow);
+  box-shadow: 0 1px 0 var(--ButtonHilight), 0 1px 0 var(--ButtonHilight) inset;
+  width: 100%;
+  box-sizing: border-box;
+  background: #c0c0c0;
 }
-.ie-combo { position: relative; display: flex; align-items: center; gap: 4px; background: white; border: 2px solid #808080; box-shadow: inset 1px 1px 0 var(--shadow-light), inset -1px -1px 0 var(--shadow-dark); padding: 0 2px; flex: 1; }
-.ie-combo .favicon { width: 16px; height: 16px; background: radial-gradient(circle at 6px 6px, #4a90e2, #0b3f91); border: 1px solid #003; }
-.ie-combo input { border: none; outline: none; flex: 1; }
+.ie-toolbar .address::before,
+.ie-toolbar .address::after { content: none; }
+.ie-address-actions { display: inline-flex; gap: 6px; margin-left: 8px; }
+.ie-combo { position: relative; display: flex; align-items: center; gap: 2px; background: white; border: 2px solid #808080; box-shadow: inset 1px 1px 0 var(--shadow-light), inset -1px -1px 0 var(--shadow-dark); padding: 0 2px; flex: 1; }
+.ie-combo .favicon { width: 16px; height: 16px; background: url('https://98.js.org/images/icons/html-16x16.png') no-repeat center/contain; border: 1px solid #003; background-color: #fff; }
+.ie-combo input { border: none; outline: none; flex: 1; padding-left: 2px; }
 .combo-arrow { background: #c0c0c0; border: 2px solid #808080; width: 18px; height: 18px; box-shadow: inset -1px -1px 0 var(--shadow-dark), inset 1px 1px 0 var(--shadow-light); }
 .combo-arrow:hover { filter: brightness(1.03); }
 .combo-arrow:active { box-shadow: inset 1px 1px 0 var(--shadow-dark), inset -1px -1px 0 var(--shadow-light); }
@@ -275,3 +310,18 @@ body {
   background: rgb(214, 214, 214); /* un paso más oscuro que hover */
   box-shadow: inset 1px 1px 0 #a6a6a6, inset -1px -1px 0 #f6f6f6; /* bevel más suave */
 }
+
+/* Ajuste de espaciado vertical en menubar y toolbar */
+.ie-menubar { margin-bottom: 3px; }
+.ie-toolbar { row-gap: 3px; }
+.ie-toolbtn { height: 36px; }
+.ie-toolbtn::before { top: 6px; }
+.ie-toolbtn::after { bottom: 1px; }
+
+/* Overrides: reducir espacio debajo de la fila de iconos */
+.ie-toolbar { row-gap: 2px; }
+.ie-toolbar .address { margin-top: 0; }
+
+/* Controles de ventana en negro */
+.retro-titlebar .caption-controls button { color: #000; }
+.retro-titlebar .caption-controls .window-close-button.window-action-close.window-button { color: #000; }

@@ -1,4 +1,4 @@
-export default function Google1998Page() {
+export default function Google1998Page({ onSubmit }:{ onSubmit?: (q: string)=>void }) {
   return (
     <div style={{ fontFamily: 'Times New Roman, serif', fontSize: 15 }}>
       <table width="760" cellPadding={0} cellSpacing={0} border={0} style={{ margin: '40px auto 0 auto', textAlign: 'center' }}>
@@ -22,7 +22,7 @@ export default function Google1998Page() {
                   </tr>
                   <tr>
                     <td align="center" style={{ padding: '0 4px 1px 4px' }}>
-                      <input type="text" size={30} style={{
+                      <input id="g99-q" type="text" size={30} style={{
                         background: '#ffffff',
                         border: '1px solid #808080',
                         boxShadow: 'inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080',
@@ -34,8 +34,12 @@ export default function Google1998Page() {
                   </tr>
                   <tr>
                     <td align="center" style={{ padding: '0 4px 4px 4px' }}>
-                      <input type="submit" value="Google Search" className="g99-btn" style={{ padding: '1px 8px', fontSize: 13, marginRight: 6 }} />
-                      <input type="submit" value="I'm feeling lucky" className="g99-btn" style={{ padding: '1px 8px', fontSize: 13 }} />
+                      <input type="button" value="Google Search" className="g99-btn" style={{ padding: '1px 8px', fontSize: 13, marginRight: 6 }} onClick={() => {
+                        const el = document.getElementById('g99-q') as HTMLInputElement | null
+                        const q = (el?.value || 'google').trim()
+                        onSubmit?.(q)
+                      }} />
+                      <input type="button" value="I'm feeling lucky" className="g99-btn" style={{ padding: '1px 8px', fontSize: 13 }} />
                     </td>
                   </tr>
                 </tbody>

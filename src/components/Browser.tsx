@@ -4,21 +4,24 @@ import BlockbusterPage from '../pages/BlockbusterPage'
 import GeoCitiesPage from '../pages/GeoCitiesPage'
 import Google1998Page from '../pages/Google1998Page'
 import MSN1998Page from '../pages/MSN1998Page'
+import Google1999ResultsPage from '../pages/Google1999ResultsPage'
 import { playClick } from '../sounds'
 
-type PageKey = 'msn' | 'google' | 'yahoo' | 'blockbuster' | 'geocities'
+type PageKey = 'msn' | 'google' | 'google-results' | 'yahoo' | 'blockbuster' | 'geocities'
 
 const PAGE_TO_URL: Record<PageKey, string> = {
   msn: 'http://www.msn.com',
   google: 'http://www.google.com',
+  'google-results': 'http://www.google.com/search',
   yahoo: 'http://www.yahoo.com',
   blockbuster: 'http://www.blockbuster.com/games/',
   geocities: 'http://www.geocities.com/pokefan',
 }
 
-function PageRenderer({ page, onMsnSearch }: { page: PageKey, onMsnSearch: (q: string)=>void }) {
+function PageRenderer({ page, onMsnSearch, onGoogleSubmit }: { page: PageKey, onMsnSearch: (q: string)=>void, onGoogleSubmit: (q: string)=>void }) {
   if (page === 'msn') return <MSN1998Page onSearch={onMsnSearch} />
-  if (page === 'google') return <Google1998Page />
+  if (page === 'google') return <Google1998Page onSubmit={onGoogleSubmit} />
+  if (page === 'google-results') return null
   if (page === 'yahoo') return <YahooPage />
   if (page === 'blockbuster') return <BlockbusterPage />
   return <GeoCitiesPage />
@@ -32,6 +35,8 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
   const [progress, setProgress] = useState(0)
   const [addressInput, setAddressInput] = useState('')
   const stopRef = useRef(false)
+  const [googleQuery, setGoogleQuery] = useState('google')
+  const [googlePage, setGooglePage] = useState(1)
 
   function navigate(next: PageKey) {
     playClick()
@@ -128,12 +133,12 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
       <div className="retro-titlebar text-xs justify-between">
         <div className="flex items-center gap-2">
           <span className="ie-appicon" aria-hidden="true" />
-          <span className="font-bold">{title}</span>
+          <span className="font-bold">http://google.com/ - {title}</span>
         </div>
         <div className="caption-controls">
           <button title="Minimize">_</button>
           <button title="Maximize">▢</button>
-          <button title="Close">×</button>
+          <button title="Close" className="window-close-button window-action-close window-button">×</button>
         </div>
       </div>
       {/* Menú clásico (ES) */}
@@ -173,9 +178,11 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
             )}
           </div>
           <button className="retro-btn" type="submit">Ir</button>
+          <div className="ie-address-actions">
+            <button className="ie-pane-toggle" type="button" onClick={()=>setShowSearch(!showSearch)}>Búsqueda</button>
+            <button className="ie-pane-toggle" type="button" onClick={()=>setShowFav(!showFav)}>Vínculos</button>
+          </div>
         </form>
-        <button className="ie-pane-toggle" onClick={()=>setShowSearch(!showSearch)}>Búsqueda</button>
-        <button className="ie-pane-toggle" onClick={()=>setShowFav(!showFav)}>Vínculos</button>
       </div>
       {/* Capa de carga */}
       {isLoading && (
@@ -252,8 +259,19 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
             <Error98 query={addressInput} onDismiss={()=>setErrorMode(false)} />
           ) : isLoading ? (
             <div className="p-4 text-center text-sm">Cargando contenido desde {address}...</div>
+          ) : current === 'google-results' ? (
+            <Google1999ResultsPage
+              query={googleQuery}
+              page={googlePage}
+              onSubmitQuery={(q)=>{ setGoogleQuery(q || 'google'); setGooglePage(1); setCurrent('google-results'); }}
+              onNext={()=> setGooglePage(p=>p+1) }
+            />
           ) : (
-            <PageRenderer page={current} onMsnSearch={(q)=>{ setShowSearch(true); setSearchQuery(q); }} />
+            <PageRenderer
+              page={current}
+              onMsnSearch={(q)=>{ setShowSearch(true); setSearchQuery(q); }}
+              onGoogleSubmit={(q)=>{ setGoogleQuery(q || 'google'); setGooglePage(1); setCurrent('google-results'); }}
+            />
           )}
         </div>
       </div>
