@@ -1,3 +1,5 @@
+import logoGoogle from '../../public/logo google beta2.jpg'
+
 export default function Google1998Page({ onSubmit }:{ onSubmit?: (q: string)=>void }) {
   return (
     <div style={{ fontFamily: 'Times New Roman, serif', fontSize: 15 }}>
@@ -6,7 +8,8 @@ export default function Google1998Page({ onSubmit }:{ onSubmit?: (q: string)=>vo
           <tr>
             <td>
               <img
-                src="https://web.archive.org/web/19990504112211im_/http://www.google.com/google.jpg"
+                /* src="https://web.archive.org/web/19990504112211im_/http://www.google.com/google.jpg" */
+                src={logoGoogle}
                 alt="Google!"
                 height={110}
                 style={{ display: 'block', margin: '0 auto' }}
@@ -22,7 +25,7 @@ export default function Google1998Page({ onSubmit }:{ onSubmit?: (q: string)=>vo
                   </tr>
                   <tr>
                     <td align="center" style={{ padding: '0 4px 1px 4px' }}>
-                      <input id="g99-q" type="text" size={30} style={{
+                      <input id="g99-q" type="text" size={30} onKeyDown={(e)=>{ if(e.key==='Enter'){ e.preventDefault(); const value = ((e.target as HTMLInputElement).value || 'google').trim(); onSubmit?.(value) } }} style={{
                         background: '#ffffff',
                         border: '1px solid #808080',
                         boxShadow: 'inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080',

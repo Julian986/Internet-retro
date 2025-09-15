@@ -5,9 +5,12 @@ import GeoCitiesPage from '../pages/GeoCitiesPage'
 import Google1998Page from '../pages/Google1998Page'
 import MSN1998Page from '../pages/MSN1998Page'
 import Google1999ResultsPage from '../pages/Google1999ResultsPage'
+import ITCorpPage from '../pages/ITCorpPage'
+import SporkPage from '../pages/SporkPage'
+import Amazon1999Page from '../pages/Amazon1999Page'
 import { playClick } from '../sounds'
 
-type PageKey = 'msn' | 'google' | 'google-results' | 'yahoo' | 'blockbuster' | 'geocities'
+type PageKey = 'msn' | 'google' | 'google-results' | 'yahoo' | 'blockbuster' | 'geocities' | 'itcorp' | 'spork' | 'amazon1999'
 
 const PAGE_TO_URL: Record<PageKey, string> = {
   msn: 'http://www.msn.com',
@@ -16,14 +19,20 @@ const PAGE_TO_URL: Record<PageKey, string> = {
   yahoo: 'http://www.yahoo.com',
   blockbuster: 'http://www.blockbuster.com/games/',
   geocities: 'http://www.geocities.com/pokefan',
+  itcorp: 'http://www.itcorp.com',
+  spork: 'http://www.spork.org',
+  amazon1999: 'http://www.amazon.com',
 }
 
-function PageRenderer({ page, onMsnSearch, onGoogleSubmit }: { page: PageKey, onMsnSearch: (q: string)=>void, onGoogleSubmit: (q: string)=>void }) {
+function PageRenderer({ page, onMsnSearch, onGoogleSubmit, itcorpQuery }: { page: PageKey, onMsnSearch: (q: string)=>void, onGoogleSubmit: (q: string)=>void, itcorpQuery?: string }) {
   if (page === 'msn') return <MSN1998Page onSearch={onMsnSearch} />
   if (page === 'google') return <Google1998Page onSubmit={onGoogleSubmit} />
   if (page === 'google-results') return null
   if (page === 'yahoo') return <YahooPage />
   if (page === 'blockbuster') return <BlockbusterPage />
+  if (page === 'itcorp') return <ITCorpPage query={itcorpQuery} />
+  if (page === 'spork') return <SporkPage />
+  if (page === 'amazon1999') return <Amazon1999Page />
   return <GeoCitiesPage />
 }
 
@@ -37,10 +46,13 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
   const stopRef = useRef(false)
   const [googleQuery, setGoogleQuery] = useState('google')
   const [googlePage, setGooglePage] = useState(1)
+  const [itcorpQuery, setItcorpQuery] = useState<string>('technology')
+  const [loadingMessage, setLoadingMessage] = useState<string | null>(null)
 
   function navigate(next: PageKey) {
     playClick()
     setIsLoading(true)
+    setLoadingMessage(null)
     setProgress(0)
     stopRef.current = false
     const delay = 1500 + Math.floor(Math.random() * 1200)
@@ -67,9 +79,35 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
 
   function goBack() {
     if (pointer > 0) {
+      const target = history[pointer - 1]
+      const shouldSimulateSlow = current === 'itcorp' && target === 'google-results'
+      if (shouldSimulateSlow) {
+        playClick()
+        setIsLoading(true)
+        setLoadingMessage('Restaurando la página anterior…')
+        setProgress(0)
+        const delay = 1800 + Math.floor(Math.random() * 1600)
+        const startedAt = Date.now()
+        const tick = () => {
+          const elapsed = Date.now() - startedAt
+          const pct = Math.min(98, Math.floor((elapsed / delay) * 100))
+          setProgress(pct)
+          if (elapsed < delay) {
+            raf = requestAnimationFrame(tick)
+          } else {
+            setIsLoading(false)
+            setLoadingMessage(null)
+            setProgress(100)
+            setPointer(pointer - 1)
+            setCurrent(target)
+          }
+        }
+        let raf = requestAnimationFrame(tick)
+        return
+      }
       playClick()
       setPointer(pointer - 1)
-      setCurrent(history[pointer - 1])
+      setCurrent(target)
     }
   }
   function goForward() {
@@ -86,7 +124,7 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
     setTimeout(() => { setIsLoading(false); setProgress(100) }, 1000)
   }
   function stop() { stopRef.current = true; setIsLoading(false); }
-  function home() { navigate('msn') }
+  function home() { navigate('google') }
 
   const address = useMemo(() => PAGE_TO_URL[current], [current])
   useEffect(() => { setAddressInput(address) }, [address])
@@ -98,6 +136,8 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
     return () => clearTimeout(t)
   }, [])
 
+  // Navegación a ITCorp ahora se hace mediante callback directo
+
   function handleAddressSubmit(e: React.FormEvent) {
     e.preventDefault()
     const value = addressInput.trim().toLowerCase()
@@ -106,6 +146,9 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
     if (value.includes('yahoo')) return navigate('yahoo')
     if (value.includes('blockbuster')) return navigate('blockbuster')
     if (value.includes('geocities') || value.includes('pokemon')) return navigate('geocities')
+    if (value.includes('itcorp')) return navigate('itcorp')
+    if (value.includes('spork')) return navigate('spork')
+    if (value.includes('amazon')) return navigate('amazon1999')
     setIsLoading(false)
     setCurrent('msn')
     setAddressInput(value)
@@ -180,13 +223,13 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
           <button className="retro-btn" type="submit">Ir</button>
           <div className="ie-address-actions">
             <button className="ie-pane-toggle" type="button" onClick={()=>setShowSearch(!showSearch)}>Búsqueda</button>
-            <button className="ie-pane-toggle" type="button" onClick={()=>setShowFav(!showFav)}>Vínculos</button>
+            <button className="ie-pane-toggle" type="button">Vínculos</button>
           </div>
         </form>
       </div>
       {/* Capa de carga */}
       {isLoading && (
-        <div className="bg-black text-green-200 text-sm px-2 py-1">Conectando al servidor... {address}</div>
+        <div className="bg-black text-green-200 text-sm px-2 py-1">{loadingMessage ?? (`Conectando al servidor... ${address}`)}</div>
       )}
       {/* Contenido + Favorites */}
       <div className="flex-1 flex min-h-0">
@@ -203,11 +246,11 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
                 <div className="groupbox">
                   <div className="legend">Find a Web page</div>
                   <div className="text-xs mb-1">containing all the words:</div>
-                  <form onSubmit={(e)=>{e.preventDefault(); if (searchQuery) setSearchQuery(searchQuery)}} className="flex gap-1">
-                    <input className="retro-input flex-1" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} />
+                  <form onSubmit={(e)=>{e.preventDefault(); if (searchQuery) setSearchQuery(searchQuery)}} className="mb-3">
+                    <input className="retro-input w-full mb-2" value={searchQuery} onChange={(e)=>setSearchQuery(e.target.value)} />
                     <button className="retro-btn" type="submit">Search</button>
                   </form>
-                  <div className="mt-3 text-xs">Providers: MSN Search · LookSmart</div>
+                  <div className="text-xs">Providers: MSN Search · LookSmart</div>
                 </div>
               )}
               {searchMode === 'people' && (
@@ -263,14 +306,18 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
             <Google1999ResultsPage
               query={googleQuery}
               page={googlePage}
-              onSubmitQuery={(q)=>{ setGoogleQuery(q || 'google'); setGooglePage(1); setCurrent('google-results'); }}
+              onSubmitQuery={(q)=>{ setGoogleQuery(q || 'google'); setGooglePage(1); }}
               onNext={()=> setGooglePage(p=>p+1) }
+              onOpenITCorp={(q)=>{ setItcorpQuery(q || 'technology'); navigate('itcorp') }}
+              onOpenAmazon={()=>{ navigate('amazon1999') }}
+              onOpenSpork={()=>{ navigate('spork') }}
             />
           ) : (
             <PageRenderer
               page={current}
               onMsnSearch={(q)=>{ setShowSearch(true); setSearchQuery(q); }}
-              onGoogleSubmit={(q)=>{ setGoogleQuery(q || 'google'); setGooglePage(1); setCurrent('google-results'); }}
+              onGoogleSubmit={(q)=>{ setGoogleQuery(q || 'google'); setGooglePage(1); setItcorpQuery(q || 'technology'); navigate('google-results') }}
+              itcorpQuery={itcorpQuery}
             />
           )}
         </div>

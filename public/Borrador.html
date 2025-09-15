@@ -1,0 +1,247 @@
+
+
+
+
+// Amazon 1999 homepage replica (static). Tailwind-only styling + a few inline styles for
+// period-authentic colors and link states. Designed at ~760px content width like late-90s layouts.
+// Drop this into your React + Tailwind project as Amazon1999.tsx and render <Amazon1999 />.
+
+
+import React from "react";
+
+export default function Amazon1999Page() {
+  return (
+    <div className="min-h-screen w-full bg-white text-black" style={{ fontFamily: 'Times New Roman, serif' }}>
+      {/* Top util bar */}
+      <div className="w-full border-b" style={{ background: '#F5F5F5', borderColor: '#ddd' }}>
+        <div className="mx-auto max-w-[780px] px-2 py-1 text-[12px] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span>Friday, August 27, 1999</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="#" className="underline">Your Account</a>
+            <a href="#" className="underline">Help</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Primary blue tabs */}
+      <div className="w-full" style={{ background: '#003366' }}>
+        <div className="mx-auto max-w-[780px] px-2">
+          <nav className="flex flex-wrap gap-1 py-1 text-white text-[12px]">
+            {['WELCOME','BOOKS','MUSIC','VIDEO','TOYS & GAMES','ELECTRONICS','E-CARDS','AUCTIONS'].map((t, i) => (
+              <span key={i} className="px-2 py-0.5 bg-[#0057a0] rounded-sm border border-white/40 shadow-[inset_0_-1px_0_#00264d]">{t}</span>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* Secondary nav */}
+      <div className="w-full" style={{ background: '#0057a0' }}>
+        <div className="mx-auto max-w-[780px] px-2">
+          <nav className="flex flex-wrap gap-6 py-1 text-white text-[12px]">
+            <a href="#" className="underline">HOW TO ORDER</a>
+            <a href="#" className="underline">OUR GUARANTEE</a>
+            <a href="#" className="underline">SITE GUIDE</a>
+          </nav>
+        </div>
+      </div>
+
+      {/* Search bar row */}
+      <div className="mx-auto max-w-[780px] px-2 py-2 grid grid-cols-3 gap-4">
+        <div className="col-span-3 md:col-span-1">
+          <label className="block text-[12px] font-bold mb-1">SEARCH</label>
+          <div className="flex gap-1 items-center">
+            <select className="border px-1 py-0.5 text-[12px] w-[130px]">
+              {['All Products','Books','Music','Video','Toys & Games','Electronics','Auctions'].map((o) => (
+                <option key={o}>{o}</option>
+              ))}
+            </select>
+            <input className="border flex-1 px-2 py-0.5 text-[12px]" placeholder="Search..." />
+            <button className="border px-2 py-0.5 text-[12px]" style={{ background: '#e6e6e6' }}>Go</button>
+          </div>
+        </div>
+        <div className="hidden md:block md:col-span-2" />
+      </div>
+
+      {/* Welcome strip */}
+      <div className="mx-auto max-w-[780px] px-2">
+        <div className="border p-3 text-[14px]" style={{ borderColor: '#e0e0e0', background: '#fffaf0' }}>
+          <div className="text-[22px] leading-none font-bold" style={{ fontFamily: 'Georgia, Times New Roman, serif' }}>amazon.com</div>
+          <div className="mt-1">
+            Hello! Shopping at Amazon.com is 100% secure—<a href="#" className="underline">guaranteed</a>. Already a customer? <a href="#" className="underline">Sign in</a>.
+          </div>
+        </div>
+      </div>
+
+      {/* Main 3-column content area */}
+      <div className="mx-auto max-w-[780px] px-2 mt-3 grid grid-cols-[180px_minmax(0,1fr)_200px] gap-4">
+        {/* Left column: Browse */}
+        <aside>
+          <Section title="BROWSE">
+            <NavBlock title="Books" links={['Bestsellers','Computers, Kids, Business...','New Releases','Top Sellers','Classical','Soundtracks...']} />
+            <NavBlock title="Music" links={['Bestsellers','New Releases','Top Sellers','Classical','Soundtracks...']} />
+            <NavBlock title="Video" links={['DVDs','Top Sellers','New Releases','Kids & Family...']} />
+            <NavBlock title="Electronics" links={['TVs','Cameras','Computer Add-Ons','DVD Players...']} />
+            <NavBlock title="Auctions" links={['Books','CDs','Photo Equipment','Collectibles...']} />
+            <NavBlock title="Toys & Games" links={['Toys for Grownups','Games & Puzzles','Action Figures','Baby...']} />
+            <NavBlock title="Free E-Cards" links={['Daily Cards','Hi, Love, Friendship...']} />
+          </Section>
+
+          <Section title="COMMUNITY">
+            <SmallLink>Purchase Circles</SmallLink>
+          </Section>
+
+          <Section title="GIFT SERVICES">
+            <SmallLink>Gift Certificates</SmallLink>
+            <SmallLink>Special-Occasion Reminders</SmallLink>
+            <SmallLink>Shipping</SmallLink>
+          </Section>
+
+          <Section title="NEED HELP?">
+            <SmallLink>Help Desk</SmallLink>
+            <SmallLink>Site Guide</SmallLink>
+            <SmallLink>Shipping Policies</SmallLink>
+            <SmallLink>Send Us E-mail</SmallLink>
+            <SmallLink>Our Privacy Policy</SmallLink>
+          </Section>
+        </aside>
+
+        {/* Center content */}
+        <main className="text-[14px]">
+          <ContentBlock heading="In Books" title="London Calling" body="Wrapping up an ambitious reissue program, the great Penelope Fitzgerald delivers not one but two classics in miniature. The Golden Child is the British author's first novel, in which an ancient mummy ignites a curatorial ruckus, while At Freddie's revolves around a drama academy and its deeply amusing student body. Go to Books"/>
+
+          <ContentBlock heading="In Electronics" title="MiniDisc the Magnificent"
+            body="Sony's Bundle MiniDisc package harmonizes two separate products—a MiniDisc home recording deck and a portable MiniDisc player—so you can record, edit, and title your own discs from both analog and digital sources, then enjoy them on the go. Go to Electronics"/>
+
+          <ContentBlock heading="In Toys & Games" title="Pack with Pride" body="We ain't lion: this adorable Goliath Backpack Pal is a great way to scare away those first-day-of-school jitters. Fill him with books, toys, and treats, and this furry beast will be your child's mane man in no time. Go to Toys & Games"/>
+
+          <ContentBlock heading="In Video" title="Texas Two-Step?" body="In a stunning admission this week, the FBI confirmed that in 1993 its agents fired flammable devices at the Branch Davidian compound in Waco, Texas, hours before the inferno erupted. But the Oscar-nominated Waco: The Rules of Engagement suggested this possibility back in 1997. Check out this fearless documentary and prepare to question the government's spin. Go to Video"/>
+
+          <ContentBlock heading="In Music" title="Industrial Evolution" body="They've been accused of being Nine Inch Nails lite, but on Title of Record, Filter weld their amped-up techno-metal aggression to an uncanny pop sensibility, creating a memorable set of furious, passionate songs sure to keep the mosh pit roiling. Go to Music"/>
+
+          <ContentBlock heading="In Auctions" title="Build a Better Brain" body="Before you hit the books, visit Amazon.com Auctions and check out the huge selection of educational software. Whether you're teaching the ABCs or writing a thesis, our sellers have the tools to help you succeed. Go to Auctions"/>
+
+          <div className="text-[11px] text-gray-600 mt-6 border-t pt-2">* The New York Times is the registered trademark of The New York Times Company, which is not affiliated with and does not sponsor or endorse the services of Amazon.com.</div>
+        </main>
+
+        {/* Right column: side boxes */}
+        <aside className="space-y-3 text-[13px]">
+          <RightBox title="Amazon.com 100 Hot Books" footerLink="More Hot Books">
+            <ol className="list-decimal ml-4 space-y-1">
+              <li><a href="#" className="underline">Harry Potter and the Prisoner of Azkaban</a> by J. K. Rowling</li>
+              <li><a href="#" className="underline">Harry Potter and the Sorcerer's Stone</a> by J. K. Rowling</li>
+              <li><a href="#" className="underline">Harry Potter and the Chamber of Secrets</a> by J. K. Rowling</li>
+            </ol>
+          </RightBox>
+
+          <RightBox title="Today in Music" footerLink="More Music Top Sellers">
+            <div className="text-[12px]">Free song downloads.</div>
+            <div className="mt-2 font-bold text-[12px]">Music Top Sellers</div>
+            <ol className="list-decimal ml-4 space-y-1">
+              <li>Western Wall: The Tucson Sessions — Linda Ronstadt, Emmylou Harris</li>
+              <li>Fly — Dixie Chicks</li>
+              <li>Supernatural — Santana</li>
+            </ol>
+          </RightBox>
+
+          <RightBox title="Today in Video" footerLink="DVD Top Sellers">
+            <div className="text-[12px]">Pre-order The Matrix on DVD.</div>
+            <div className="mt-2 font-bold text-[12px]">VHS Top Sellers</div>
+            <ol className="list-decimal ml-4 space-y-1">
+              <li>Living Yoga: A.M./P.M. Yoga for Beginners Set</li>
+              <li>There's Something About Mary (Special Edition)</li>
+              <li>Tae-Bo Workout: Instructional and Basic</li>
+            </ol>
+          </RightBox>
+        </aside>
+      </div>
+
+      {/* Footer links */}
+      <div className="mx-auto max-w-[780px] px-2 mt-6 pb-10 text-[12px]">
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
+          <a href="#" className="underline">1-Click Settings</a>
+          <a href="#" className="underline">Shopping Cart</a>
+          <a href="#" className="underline">Your Account</a>
+          <a href="#" className="underline">Help</a>
+        </div>
+        <div className="mt-3 text-center">
+          <div className="text-[14px]">
+            <a href="#" className="underline">About Amazon.com</a> · <a href="#" className="underline">Join Our Staff</a>
+          </div>
+          <div className="mt-1">Copyright and disclaimer © 1996-1999, Amazon.com, Inc.</div>
+        </div>
+      </div>
+
+      {/* Vintage link colors + underlines */}
+      <style>{`
+        a { color: #003399; }
+        a:visited { color: #660099; }
+        a:hover { text-decoration: none; }
+      `}</style>
+    </div>
+  );
+}
+
+/* =======================
+ * Reusable subcomponents
+ * ======================= */
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="mb-3">
+      <div className="uppercase font-bold text-[12px] tracking-wide px-2 py-1 mb-1 border" style={{ background: '#e6f0fa', color: '#003366', borderColor: '#99bbe6' }}>{title}</div>
+      <div className="border p-2 space-y-2" style={{ borderColor: '#e0e0e0' }}>{children}</div>
+    </div>
+  );
+}
+
+function NavBlock({ title, links }: { title: string; links: string[] }) {
+  return (
+    <div className="">
+      <div className="flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full" style={{ background: '#003366' }} />
+        <div className="font-bold text-[14px]"><a href="#" className="no-underline" style={{ color: '#003366' }}>{title}</a></div>
+      </div>
+      <ul className="ml-4 mt-1 list-disc marker:text-[#003366] text-[12px] leading-5">
+        {links.map((l) => (
+          <li key={l}><a href="#" className="underline">{l}</a></li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SmallLink({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-[12px]"><a href="#" className="underline">{children}</a></div>
+  );
+}
+
+function ContentBlock({ heading, title, body }: { heading: string; title: string; body: string }) {
+  return (
+    <div className="mb-5">
+      <div className="font-bold text-[12px] text-[#003366] uppercase">{heading}</div>
+      <div className="mt-1 text-[20px] font-bold" style={{ color: '#cc6600' }}>{title}</div>
+      <div className="mt-1 text-[14px] leading-5">
+        {body.split(/(Books|Electronics|Toys & Games|Video|Music|Auctions)/).map((chunk, i) => (
+          /Books|Electronics|Toys & Games|Video|Music|Auctions/.test(chunk) ? <a key={i} href="#" className="underline">{chunk}</a> : <span key={i}>{chunk}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function RightBox({ title, children, footerLink }: { title: string; children: React.ReactNode; footerLink?: string }) {
+  return (
+    <div className="border" style={{ borderColor: '#e0e0e0', background: '#f9fcff' }}>
+      <div className="px-2 py-1 text-[12px] font-bold uppercase" style={{ background: '#e6f0fa', color: '#003366', borderBottom: '1px solid #e0e0e0' }}>{title}</div>
+      <div className="p-2 space-y-2 text-[13px]">{children}</div>
+      {footerLink && (
+        <div className="px-2 py-1 border-t text-[12px]" style={{ borderColor: '#e0e0e0' }}>
+          <a href="#" className="underline">{footerLink}</a>
+        </div>
+      )}
+    </div>
+  );
+}

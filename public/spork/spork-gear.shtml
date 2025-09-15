@@ -1,0 +1,100 @@
+<html><head>
+<title>Spork Gear? COOL!</title>
+<link rev="made" href="mailto:shmit@spork.org">
+</head>
+
+<body bgcolor="0" text="#dfe7e7" link="#ffff00" vlink="#cccc00">
+<center><h1>Getting Spork Gear</h1></center>
+<p align="right"><em>Last updated:  30-Sep-1996</em>
+
+<br clear="all">
+
+</p><h2>See the shirt graphics</h2>
+
+The front graphic is done, scanned, and uploaded. The back graphic still
+needs to be uploaded.
+
+You can see them at <a href="ftp://ftp.spork.org/pub/shirt/">
+ftp://ftp.spork.org/pub/shirt/</a>
+
+Ill put thumbnails of them here shortly.
+<hr>
+
+<h2>How do I get my hands on this cool spork gear?</h2>
+
+For US$7+S&amp;H you can get yourself a quality spork shirt. It will
+have a never before seen 3d spork graphic on the front and the slogan
+``I saw some guy trying to eat ramen with a spork at
+http://www.spork.org/'' and an image on the front.
+
+<hr>
+<p>First, you should fill out this order form. But since at the moment
+I have no selection, just mail $7 + $2 S&amp;H for each shirt you want
+to the address below.
+</p><form method="get" action="pcgi-bin/spork-order.cgi">
+<h3>Shipping Information</h3>
+Name:<input name="name"><br>
+Address Line 1:<input name="addr_line_1"><br>
+Address Line 2:<input name="addr_line_2"><br>
+City:<input name="city">
+State/Province:<input name="state" size="2">
+Zip Code:<input name="zip_code" size="10"><br>
+Country:<input name="country" size="10"><br>
+
+<h3>Order Information</h3>
+Size:<select name="size">
+<option selected="">XL
+</option></select>
+Color:<select name="color">
+<option selected="">White
+</option></select>
+Quantity:<select name="quantity">
+<option selected="">1
+</option><option>2
+</option><option>3
+</option><option>4
+</option><option>5
+</option><option>6
+</option><option>7
+</option><option>8
+</option><option>9
+</option><option>10
+</option></select>
+
+<br>
+<input type="submit" value="Make order form">
+</form>
+<p>Then you mail your money along with the order form to:
+<br>
+<kbd>
+</kbd></p><p>
+Do not do this. There are no shirts. This site is 20 years old. What's
+wrong with you?
+
+
+</p><p>
+As I recieve money, I'll make the shirts.
+</p><hr>
+
+<a name="cost-info"><h2>Hey! $7! How much are you making?</h2></a>
+<p>Nothing (At $7 bucks, how much could I possibly be making?). In fact, 
+when  S&amp;H fits in I'll be at a loss for some people. Unfortuantely, 
+the shirts are of only medium stock, and the decal is nothing more than 
+iron-on (but iron-oned with love dammit! Love!), if you want something 
+more durable, You can send me $24 (Which is out and out highway robbery! 
+If you know someplace that does silkscreening on the cheap, please tell 
+me).
+
+</p><hr>
+
+<!--#include virtual="/toc.html"-->
+
+<hr>
+
+This page has been accessed <!--#include virtual="/pcgi-bin/counter.cgi"--> times 
+since the first of the month.
+<address><a href="mailto:shmit@spork.org">shmit@spork.org</a></address>
+
+
+
+</body></html>

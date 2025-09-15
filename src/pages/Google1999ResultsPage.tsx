@@ -1,4 +1,6 @@
 import { useMemo } from 'react'
+import logoGoogle from '../../public/logo google beta2.jpg'
+
 
 type Result = {
   title: string
@@ -14,14 +16,14 @@ function generateFakeResults(query: string): Result[] {
       snippet: `...the web using Google Try our special searches: ${query} ... web's resources ©1999 Google Inc...`,
     },
     {
-      title: `Google Search: <${query}>`,
-      url: `www.google.com/${query}`,
-      snippet: `...terms. Search the entire web from the Google home page! ...`,
+      title: `Amazon.com (${query})`,
+      url: 'www.amazon.com/',
+      snippet: `...Explore books, music, and more related to ${query} at Amazon.com ...`,
     },
     {
-      title: `Why Use Google?`,
-      url: 'www.google.com/help/why.html',
-      snippet: `...Why Use Google? Because Google delivers the most relevant search results—fast!...`,
+      title: `Spork.org`,
+      url: 'www.spork.org',
+      snippet: `...Spork, foon, runcible, collectibles, and curiosities...`,
     },
     {
       title: `${query} - Directory`,
@@ -37,11 +39,14 @@ function generateFakeResults(query: string): Result[] {
   return out
 }
 
-export default function Google1999ResultsPage({ query = 'google', page = 1, onSubmitQuery, onNext }:{
+export default function Google1999ResultsPage({ query = 'google', page = 1, onSubmitQuery, onNext, onOpenITCorp, onOpenSpork, onOpenAmazon }:{
   query?: string
   page?: number
   onSubmitQuery: (q: string) => void
   onNext: () => void
+  onOpenITCorp?: (q: string) => void
+  onOpenSpork?: () => void
+  onOpenAmazon?: () => void
 }) {
   const results = useMemo(() => generateFakeResults(query), [query, page])
   const approx = useMemo(() => 234000 + query.length * 137, [query])
@@ -49,46 +54,45 @@ export default function Google1999ResultsPage({ query = 'google', page = 1, onSu
 
   return (
     <div style={{ fontFamily: 'Times New Roman, serif' }}>
-      <table width="100%" cellPadding={0} cellSpacing={0} border={0} style={{ margin: '16px 0 0 100px' }}>
+      <table width="100%" cellPadding={0} cellSpacing={0} border={0} style={{ margin: '16px 0 0 90px' }}>
         <tbody>
           <tr>
             <td>
               <table width="100%" cellPadding={0} cellSpacing={0} border={0}>
                 <tbody>
                   <tr>
-                    <td width="250" style={{ paddingTop: 8 }}>
+                    <td style={{ paddingTop: 8, paddingRight: 12, verticalAlign: 'middle', width: 340 }}>
                       <img
-                        src="https://web.archive.org/web/19990504112211im_/http://www.google.com/google.jpg"
+                        /* src="https://web.archive.org/web/19990504112211im_/http://www.google.com/google.jpg" */
+                        src={logoGoogle}
                         alt="Google!"
-                        height={70}
-                        style={{ display: 'block' }}
+                        style={{ display: 'block', height: 109, width: 'auto', maxWidth: '106%' }} //345
                       />
                     </td>
-                    <td style={{ textAlign: 'left' }}>
+                    <td style={{ textAlign: 'left', paddingLeft: 18, verticalAlign: 'middle' }}>
                       <input
                         defaultValue={query}
                         onKeyDown={(e)=>{ if(e.key==='Enter'){ e.preventDefault(); onSubmitQuery((e.target as HTMLInputElement).value) } }}
                         type="text"
                         style={{
                           background: '#ffffff',
-                          border: '1px solid #808080',
-                          boxShadow: 'inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080',
-                          height: 22,
+                          border: '1px solid #b5b5b5',
+                          boxShadow: 'inset 1px 1px 0 #ffffff, inset -1px -1px 0 #c0c0c0',
+                          height: 25,
                           padding: '3px 6px',
-                          fontSize: 14,
-                          width: 340,
+                          fontSize: 15,
+                          width: 300,
                         }}
                       />
-                      <select defaultValue="10" style={{ marginLeft: 8, height: 22, fontSize: 13 }}>
+                      <select defaultValue="10" style={{ marginLeft: 8, height: 22, fontSize: 13, border: '1px solid #9c9c9c', boxShadow: 'inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080' }}>
                         <option>10 results</option>
                         <option>20 results</option>
                         <option>50 results</option>
                       </select>
+                      <input type="button" value="Google Search" className="g99-btn" style={{ padding: '2px 10px', fontSize: 12, marginLeft: 10, background: '#c1c1c1' }} onClick={()=>onSubmitQuery(query)} />
+                      <input type="button" value="I'm feeling lucky" className="g99-btn" style={{ padding: '2px 10px', fontSize: 12, marginLeft: 6, background: '#c1c1c1' }} />
                     </td>
-                    <td width="260" style={{ textAlign: 'right' }}>
-                      <input type="button" value="Google Search" className="g99-btn" style={{ padding: '2px 10px', fontSize: 12, marginRight: 10 }} onClick={()=>onSubmitQuery(query)} />
-                      <input type="button" value="I'm feeling lucky" className="g99-btn" style={{ padding: '2px 10px', fontSize: 12 }} />
-                    </td>
+                    <td width="200" style={{ textAlign: 'right' }}></td>
                   </tr>
                 </tbody>
               </table>
@@ -96,7 +100,13 @@ export default function Google1999ResultsPage({ query = 'google', page = 1, onSu
           </tr>
 
           <tr>
-            <td style={{ color: '#666666', textAlign: 'center', padding: '18px 0 8px 0', fontSize: 14 }}>
+            <td>
+              <div style={{ height: 1, background: '#9c9c9c', width: '100vw', margin: '8px 0 4px 0', marginLeft: '-90px' }} />
+            </td>
+          </tr>
+
+          <tr>
+            <td style={{ color: '#666666', textAlign: 'left', padding: '8px 0 6px 0', paddingLeft: 224, fontSize: 16 }}>
               Showing results 1-10 of approximately {approx.toLocaleString()} for <b>{query}</b>. Search took {took} seconds.
             </td>
           </tr>
@@ -105,17 +115,45 @@ export default function Google1999ResultsPage({ query = 'google', page = 1, onSu
             <td>
               <table width="100%" cellPadding={0} cellSpacing={0} border={0}>
                 <tbody>
-                  {results.map((r, i) => (
-                    <tr key={i}>
-                      <td style={{ padding: '10px 4px' }}>
-                        <div style={{ fontSize: 18 }}>
-                          <a href="#" style={{ color: '#0000EE', textDecoration: 'underline' }}>{r.title}</a>
-                        </div>
-                        <div style={{ color: '#008000', fontSize: 13 }}>{r.url} - <a href="#" style={{ color: '#0000EE' }}>Cached</a> · <a href="#" style={{ color: '#0000EE' }}>2k</a> · <a href="#" style={{ color: '#0000EE' }}>GoogleScout</a></div>
-                        <div style={{ color: '#666666', fontSize: 13, lineHeight: 1.2 }}>{r.snippet.replaceAll('Google', 'Google').replaceAll(query, query)}</div>
-                      </td>
-                    </tr>
-                  ))}
+                  {results.map((r, i) => {
+                    const pool = [
+                      `...the web using Google. Try our special searches: ${query} ...`,
+                      `...search results from across the web for ${query} in seconds...`,
+                      `...find pages about ${query} using our advanced technology...`,
+                      `...more resources on ${query}. ©1999 Google Inc...`,
+                    ]
+                    let lines: string[]
+                    if (i === 0) {
+                      lines = [
+                        `...the web using Google. Try our special searches: ${query} ...`,
+                        `...web's Linux resources ©1999 Google Inc...`,
+                      ]
+                    } else if (i === 1) {
+                      lines = [
+                        `...Search the entire web from the Google home page! ...`,
+                      ]
+                    } else {
+                      const count = (i % 3) + 1
+                      lines = Array.from({ length: count }).map((_, idx) => pool[idx % pool.length])
+                    }
+                    return (
+                      <tr key={i}>
+                        <td style={{ padding: '10px 4px' }}>
+                          <div style={{ fontSize: 18 }}>
+                            <a
+                              href="#"
+                              onClick={(e)=>{ e.preventDefault(); if (i === 0) { onOpenITCorp?.(query) } if (i === 1) { onOpenAmazon?.() } if (i === 2) { onOpenSpork?.() } }}
+                              style={{ color: '#0000EE', textDecoration: 'underline' }}
+                            >{r.title}</a>
+                          </div>
+                          <div style={{ color: '#008000', fontSize: 13 }}>{r.url} - <a href="#" style={{ color: '#0000EE' }}>Cached</a> · <a href="#" style={{ color: '#0000EE' }}>2k</a> · <a href="#" style={{ color: '#0000EE' }}>GoogleScout</a></div>
+                          {lines.map((text, j) => (
+                            <div key={j} style={{ color: '#666666', fontSize: 13, lineHeight: 1.2 }}>{text}</div>
+                          ))}
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </td>
