@@ -100,7 +100,7 @@ const Amazon1999Page = () => {
             <div className="mb-0 relative">
               <div className="relative inline-block">
                 <div className="text-orange-400 text-sm font-bold absolute top-9 right-38 transform translate-x-8 whitespace-nowrap z-10">WELCOME TO</div>
-                <img src="https://inkbotdesign.com/wp-content/uploads/2020/01/amazon-logo-1998%E2%80%932000.png.webp" alt="Amazon.com" className="h-50"/>
+                <img src="https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497725/amazon-logo-1998_2000.png_ngzjj4.webp" alt="Amazon.com" className="h-50"/>
               </div>
             </div>
             

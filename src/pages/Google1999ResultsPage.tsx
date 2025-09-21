@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import logoGoogle from '../../public/logo google beta2.jpg'
+import logoGoogle from 'https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497857/logo-google-beta2_wde7mf.webp'
 
 
 type Result = {
@@ -26,6 +26,16 @@ function generateFakeResults(query: string): Result[] {
       snippet: `...Spork, foon, runcible, collectibles, and curiosities...`,
     },
     {
+      title: `Blockbuster`,
+      url: 'www.blockbuster.com',
+      snippet: `...Blockbuster Video - movies, games, and entertainment rentals...`,
+    },
+    {
+      title: `Geocities Fanpage`,
+      url: 'www.geocities.com',
+      snippet: `...Geocities - free web hosting and personal homepages...`,
+    },
+    {
       title: `${query} - Directory`,
       url: `directory.google.com/${query}`,
       snippet: `...Browse categories and sites related to ${query}.`,
@@ -39,7 +49,7 @@ function generateFakeResults(query: string): Result[] {
   return out
 }
 
-export default function Google1999ResultsPage({ query = 'google', page = 1, onSubmitQuery, onNext, onOpenITCorp, onOpenSpork, onOpenAmazon }:{
+export default function Google1999ResultsPage({ query = 'google', page = 1, onSubmitQuery, onNext, onOpenITCorp, onOpenSpork, onOpenAmazon, onOpenBlockbuster, onOpenGeocities }:{
   query?: string
   page?: number
   onSubmitQuery: (q: string) => void
@@ -47,6 +57,8 @@ export default function Google1999ResultsPage({ query = 'google', page = 1, onSu
   onOpenITCorp?: (q: string) => void
   onOpenSpork?: () => void
   onOpenAmazon?: () => void
+  onOpenBlockbuster?: () => void
+  onOpenGeocities?: () => void
 }) {
   const results = useMemo(() => generateFakeResults(query), [query, page])
   const approx = useMemo(() => 234000 + query.length * 137, [query])
@@ -142,7 +154,7 @@ export default function Google1999ResultsPage({ query = 'google', page = 1, onSu
                           <div style={{ fontSize: 18 }}>
                             <a
                               href="#"
-                              onClick={(e)=>{ e.preventDefault(); if (i === 0) { onOpenITCorp?.(query) } if (i === 1) { onOpenAmazon?.() } if (i === 2) { onOpenSpork?.() } }}
+                              onClick={(e)=>{ e.preventDefault(); if (i === 0) { onOpenITCorp?.(query) } if (i === 1) { onOpenAmazon?.() } if (i === 2) { onOpenSpork?.() } if (i === 3) { onOpenBlockbuster?.() } if (i === 4) { onOpenGeocities?.() } }}
                               style={{ color: '#0000EE', textDecoration: 'underline' }}
                             >{r.title}</a>
                           </div>

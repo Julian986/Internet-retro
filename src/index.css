@@ -68,7 +68,7 @@ body {
   box-shadow: inset -1px -1px 0 var(--shadow-dark), inset 1px 1px 0 var(--shadow-light);
   margin-left: 2px;
 }
-.ie-appicon { width: 16px; height: 16px; background: url('https://98.js.org/images/icons/html-16x16.png') no-repeat center/contain; border: 1px solid #003; display: inline-block; background-color: #fff; }
+.ie-appicon { width: 16px; height: 16px; background: url('https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497725/html-16x16_wklwdo.webp') no-repeat center/contain; border: 1px solid #003; display: inline-block; background-color: #fff; }
 
 .retro-titlebar .controls button {
   background: #c0c0c0;
@@ -179,7 +179,7 @@ body {
   height: 20px;
   transform: translateX(-50%) scale(1.11); /* 18px * 1.11 ≈ 20px */
   transform-origin: center;
-  background-image: url('/icons/browse-ui-icons.png');
+  background-image: url('https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497725/browse-ui-icons_dtkypc.webp');
   background-repeat: no-repeat;
   background-position: var(--sprite-x, 0) 0;
   image-rendering: pixelated;
@@ -233,7 +233,7 @@ body {
 .ie-toolbar .address::after { content: none; }
 .ie-address-actions { display: inline-flex; gap: 6px; margin-left: 8px; }
 .ie-combo { position: relative; display: flex; align-items: center; gap: 2px; background: white; border: 2px solid #808080; box-shadow: inset 1px 1px 0 var(--shadow-light), inset -1px -1px 0 var(--shadow-dark); padding: 0 2px; flex: 1; }
-.ie-combo .favicon { width: 16px; height: 16px; background: url('https://98.js.org/images/icons/html-16x16.png') no-repeat center/contain; border: 1px solid #003; background-color: #fff; }
+.ie-combo .favicon { width: 16px; height: 16px; background: url('https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497725/html-16x16_wklwdo.webp') no-repeat center/contain; border: 1px solid #003; background-color: #fff; }
 .ie-combo input { border: none; outline: none; flex: 1; padding-left: 2px; }
 .combo-arrow { background: #c0c0c0; border: 2px solid #808080; width: 18px; height: 18px; box-shadow: inset -1px -1px 0 var(--shadow-dark), inset 1px 1px 0 var(--shadow-light); }
 .combo-arrow:hover { filter: brightness(1.03); }

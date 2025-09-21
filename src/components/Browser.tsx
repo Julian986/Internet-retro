@@ -93,7 +93,7 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
           const pct = Math.min(98, Math.floor((elapsed / delay) * 100))
           setProgress(pct)
           if (elapsed < delay) {
-            raf = requestAnimationFrame(tick)
+            requestAnimationFrame(tick)
           } else {
             setIsLoading(false)
             setLoadingMessage(null)
@@ -102,7 +102,7 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
             setCurrent(target)
           }
         }
-        let raf = requestAnimationFrame(tick)
+        requestAnimationFrame(tick)
         return
       }
       playClick()
@@ -161,13 +161,11 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
   const [searchMode, setSearchMode] = useState<'web' | 'people' | 'business'>('web')
   const [showHistory, setShowHistory] = useState(false)
 
-  const [showFav, setShowFav] = useState(false)
+  const [showFav] = useState(false)
   const favorites: { label: string; key: PageKey }[] = [
     { label: 'MSN', key: 'msn' },
     { label: 'Google', key: 'google' },
     { label: 'Yahoo!', key: 'yahoo' },
-    { label: 'Blockbuster', key: 'blockbuster' },
-    { label: 'Geocities Fanpage', key: 'geocities' },
   ]
 
   return (
@@ -202,7 +200,7 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
           <button className="ie-toolbtn refresh" onClick={refresh} title="Refresh" />
           <button className="ie-toolbtn home" onClick={home} title="Home" />
           <button className="ie-toolbtn search" onClick={()=>setShowSearch(true)} title="Search" />
-          <button className="ie-toolbtn favorites" onClick={()=>setShowFav(true)} title="Favorites" />
+          <button className="ie-toolbtn favorites" title="Favorites" />
           <button className="ie-toolbtn print" title="Print" />
           <button className="ie-toolbtn history" title="History" />
         </div>
@@ -311,6 +309,8 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
               onOpenITCorp={(q)=>{ setItcorpQuery(q || 'technology'); navigate('itcorp') }}
               onOpenAmazon={()=>{ navigate('amazon1999') }}
               onOpenSpork={()=>{ navigate('spork') }}
+              onOpenBlockbuster={()=>{ navigate('blockbuster') }}
+              onOpenGeocities={()=>{ navigate('geocities') }}
             />
           ) : (
             <PageRenderer
