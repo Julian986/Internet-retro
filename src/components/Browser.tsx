@@ -36,7 +36,7 @@ function PageRenderer({ page, onMsnSearch, onGoogleSubmit, itcorpQuery }: { page
   return <GeoCitiesPage />
 }
 
-export default function Browser({ title = 'Microsoft Internet Explorer', page = 'msn' }:{ title?: string, page?: PageKey }) {
+export default function Browser({ title = 'Microsoft Internet Explorer', page = 'msn', zIndex, onClose, onFocus }:{ title?: string, page?: PageKey, zIndex?: number, onClose?: () => void, onFocus?: () => void }) {
   const [current, setCurrent] = useState<PageKey>(page)
   const [history, setHistory] = useState<PageKey[]>([page])
   const [pointer, setPointer] = useState(0)
@@ -169,7 +169,11 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
   ]
 
   return (
-    <div className="ie98 h-full w-full flex flex-col">
+    <div 
+      className="ie98 h-full w-full flex flex-col" 
+      style={{ zIndex: zIndex || 'auto' }}
+      onClick={onFocus}
+    >
       {/* Caption / Titlebar */}
       <div className="retro-titlebar text-xs justify-between">
         <div className="flex items-center gap-2">
@@ -179,7 +183,7 @@ export default function Browser({ title = 'Microsoft Internet Explorer', page = 
         <div className="caption-controls">
           <button title="Minimize">_</button>
           <button title="Maximize">▢</button>
-          <button title="Close" className="window-close-button window-action-close window-button">×</button>
+          <button title="Close" className="window-close-button window-action-close window-button" onClick={onClose}>×</button>
         </div>
       </div>
       {/* Menú clásico (ES) */}
