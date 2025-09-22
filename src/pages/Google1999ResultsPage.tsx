@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import logoGoogle from 'https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497857/logo-google-beta2_wde7mf.webp'
+const logoGoogle = 'https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497857/logo-google-beta2_wde7mf.webp'
 
 
 type Result = {

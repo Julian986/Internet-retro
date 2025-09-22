@@ -1,4 +1,4 @@
-import logoGoogle from 'https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497857/logo-google-beta2_wde7mf.webp'
+const logoGoogle = 'https://res.cloudinary.com/dzoupwn0e/image/upload/v1758497857/logo-google-beta2_wde7mf.webp'
 
 export default function Google1998Page({ onSubmit }:{ onSubmit?: (q: string)=>void }) {
   return (
